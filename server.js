@@ -2,11 +2,8 @@ const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
 const knex = require('knex');
 const cors = require('cors');
-const password = require('./resources/keys');
-const database = require('./database')
 const app = express();
 const port = process.env.PORT;
-// const port = 3001;
 
 const register = require('./controllers/register');
 const signin = require('./controllers/signin');
@@ -18,7 +15,7 @@ const db = knex({
     connection: {
         host: '127.0.0.1',
         user: 'postgres',
-        password: password.db,
+        password: process.env.DB_PASSWORD,
         database: 'smart-brain'
     }
 });
@@ -26,16 +23,13 @@ const db = knex({
 app.use(express.json());
 app.use(cors());
 
-app.get('/', (req, res) => {
-    res.json(database.users);
-});
-
+app.get('/', (req, res) => {res.send('it is working')})
 app.post('/signin', signin.handleSignin(db, bcrypt))
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
 app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db)})
 app.put('/image', (req, res) => { image.handleImage(req, res, db)})
 app.post('/imageurl', (req, res) => { image.handleApiCall(req, res)})
 
-app.listen(port, () => {
+app.listen(port || 3001, () => {
     console.log('Listening to port', port);
 });
