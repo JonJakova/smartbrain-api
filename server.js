@@ -5,7 +5,8 @@ const cors = require('cors');
 const password = require('./resources/keys');
 const database = require('./database')
 const app = express();
-const port = 3001;
+const port = process.env.PORT;
+// const port = 3001;
 
 const register = require('./controllers/register');
 const signin = require('./controllers/signin');
