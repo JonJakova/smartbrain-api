@@ -10,8 +10,6 @@ const handleRegister = (req, res, db, bcrypt) => {
   
 
     db.transaction(trx => {
-      console.log('this is inside trx');
-      
       trx.insert({
         hash: hash,
         email: email
