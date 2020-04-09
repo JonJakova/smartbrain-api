@@ -21,8 +21,8 @@ const db = knex({
 app.use(express.json());
 app.use(cors());
 
-app.get('/', (req, res) => {res.send(db.select('*').from('login').then(data => console.log(data)))})
-// app.get('/', (req, res) => {res.send('it is working')})
+// app.get('/', (req, res) => {res.send(db.select('*').from('login').then(data => console.log(data)))})
+app.get('/', (req, res) => {res.send('it is working')})
 app.post('/signin', signin.handleSignin(db, bcrypt))
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
 app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db)})
